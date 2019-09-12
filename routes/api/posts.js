@@ -101,4 +101,39 @@ router.post(
   }
 );
 
+//@ route Post api/posts/unlike/:id
+//@desc unlike post
+// access private
+router.post(
+  "/unlike/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            return res
+              .status(400)
+              .json({ notliked: "You have not liked this post" });
+          }
+
+          // remove like
+          const removeIndex = post.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
+
+          //splice it out of array
+          post.likes.splice(removeIndex, 1);
+
+          //save
+          post.save().then(post => res.json(post));
+        })
+        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+    });
+  }
+);
+
 module.exports = router;
