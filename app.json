@@ -1,0 +1,7 @@
+{
+  "name": "devconnector",
+  "description": "social media for developers",
+  "repository": "https://github.com/naman815/Developer-network",
+
+  "keywords": ["node", "express", "heroku", "react"]
+}
