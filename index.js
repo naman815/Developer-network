@@ -1,12 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const path = require("path");
 const port = process.env.PORT || 8000;
 const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
-const passport = require("passport");
-const path = require("path");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
